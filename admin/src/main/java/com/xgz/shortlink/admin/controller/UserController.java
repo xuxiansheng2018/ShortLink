@@ -2,7 +2,6 @@ package com.xgz.shortlink.admin.controller;
 
 import com.xgz.shortlink.admin.common.convention.result.Result;
 import com.xgz.shortlink.admin.common.convention.result.Results;
-import com.xgz.shortlink.admin.common.enums.UserErrorCodeEnum;
 import com.xgz.shortlink.admin.dto.resp.UserRespDTO;
 import com.xgz.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +24,18 @@ public class UserController {
      */
     @GetMapping("/api/shortlink/v1/user/{username}")
     public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username) {
-        UserRespDTO result = userService.getUserByUserName(username);
+//        UserRespDTO result = userService.getUserByUserName(username);
 
-        if (result == null) {
-            return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_NULL.code()).setMessage(UserErrorCodeEnum.USER_NULL.message());
-        } else {
-//            return new Result<UserRespDTO>().setCode("0").setData(result);  Result-->Results
-            return Results.success(result);
-        }
+
+//        if (result == null) {
+//            return new Result<UserRespDTO>().setCode(UserErrorCodeEnum.USER_NULL.code()).setMessage(UserErrorCodeEnum.USER_NULL.message());
+//        } else {
+////            return new Result<UserRespDTO>().setCode("0").setData(result);  Result-->Results
+//            return Results.success(result);
+//        }
+
+        return Results.success(userService.getUserByUserName(username));
+
     }
 }
 
