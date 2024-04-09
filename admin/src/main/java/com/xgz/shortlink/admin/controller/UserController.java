@@ -46,10 +46,7 @@ public class UserController {
         return Results.success(b);
     }
 
-
-    // TODO: 2024/4/8 mybaitsplus 逻辑删除的实现     自动填充的实现
     // TODO: 2024/4/8 分布式锁的实现
-    // TODO: 2024/4/8
     @PostMapping
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
