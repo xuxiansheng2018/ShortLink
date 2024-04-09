@@ -2,19 +2,29 @@ server:
   port: 8002
 
 
+    #spring:
+    #  datasource:
+    #      type: com.zaxxer.hikari.HikariDataSource
+    #      driver-class-name: com.mysql.cj.jdbc.Driver
+    #      password: root
+    #      username: root
+    #      url: jdbc:mysql://192.168.153.110:3306/shortlink?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    #      hikari:
+    #        connection-test-query: select 1
+    #        connection-timeout: 20000
+    #        idle-timeout: 300000
+    #        maximum-pool-size: 5
+    #        minimum-idle: 5
+
 spring:
   datasource:
-      type: com.zaxxer.hikari.HikariDataSource
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      password: root
-      username: root
-      url: jdbc:mysql://192.168.153.110:3306/shortlink?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
-      hikari:
-        connection-test-query: select 1
-        connection-timeout: 20000
-        idle-timeout: 300000
-        maximum-pool-size: 5
-        minimum-idle: 5
+    # ShardingSphere 对 Driver 自定义，实现分库分表等隐藏逻辑
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    # ShardingSphere 配置文件路径
+    url: jdbc:shardingsphere:classpath:shardingsphere-config.yaml
+
+
+
   data:
     redis:
       password: root
