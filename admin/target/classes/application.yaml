@@ -3,7 +3,7 @@ server:
 
 
 spring:
-    datasource:
+  datasource:
       type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
       password: root
@@ -15,3 +15,8 @@ spring:
         idle-timeout: 300000
         maximum-pool-size: 5
         minimum-idle: 5
+  data:
+    redis:
+      password: root
+      port: 6379
+      host: 192.168.153.110
