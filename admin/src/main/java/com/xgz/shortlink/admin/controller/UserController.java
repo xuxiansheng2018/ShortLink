@@ -3,6 +3,7 @@ package com.xgz.shortlink.admin.controller;
 import com.xgz.shortlink.admin.common.convention.result.Result;
 import com.xgz.shortlink.admin.common.convention.result.Results;
 import com.xgz.shortlink.admin.dto.req.UserRegisterReqDTO;
+import com.xgz.shortlink.admin.dto.req.UserUpdateReqDTO;
 import com.xgz.shortlink.admin.dto.resp.UserRespDTO;
 import com.xgz.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +47,27 @@ public class UserController {
         return Results.success(b);
     }
 
-    // TODO: 2024/4/8 分布式锁的实现
+
+    /**
+     * 注册用户
+     */
     @PostMapping
     public Result<Void> register(@RequestBody UserRegisterReqDTO requestParam) {
         userService.register(requestParam);
         return Results.success();
     }
+
+
+    /**
+     * 根据用户名  修改用户
+     */
+    @PutMapping
+    public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam){
+        userService.updateUser(requestParam);
+        return Results.success();
+    }
+
+
+
 }
 
