@@ -2,8 +2,10 @@ package com.xgz.shortlink.admin.controller;
 
 import com.xgz.shortlink.admin.common.convention.result.Result;
 import com.xgz.shortlink.admin.common.convention.result.Results;
+import com.xgz.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.xgz.shortlink.admin.dto.req.UserRegisterReqDTO;
 import com.xgz.shortlink.admin.dto.req.UserUpdateReqDTO;
+import com.xgz.shortlink.admin.dto.resp.UserLoginRespDTO;
 import com.xgz.shortlink.admin.dto.resp.UserRespDTO;
 import com.xgz.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-     /**
+    /**
      * 根据用户名查询用户信息
      */
     @GetMapping("/{username}")
@@ -62,12 +64,33 @@ public class UserController {
      * 根据用户名  修改用户
      */
     @PutMapping
-    public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam){
+    public Result<Void> update(@RequestBody UserUpdateReqDTO requestParam) {
         userService.updateUser(requestParam);
         return Results.success();
     }
 
 
+    /**
+     * 用户登录
+     */
+    @PostMapping("/login")
+    public Result<UserLoginRespDTO> login(@RequestBody UserLoginReqDTO requestParam) {
+        UserLoginRespDTO result = userService.login(requestParam);
+        return Results.success(result);
+    }
+
+    /**
+     * 根据token判断用户是否登录
+     */
+    @GetMapping("/check-login")
+    public Result<Boolean> checkLogin(@RequestParam("token") String token) {
+        return Results.success(userService.checkLogin(token));
+    }
+
+    @GetMapping("/check-login2")
+    public Result<Boolean> checkLogin2(@RequestParam("username") String username,@RequestParam("token") String token) {
+        return Results.success(userService.checkLogin2(username,token));
+    }
 
 }
 
