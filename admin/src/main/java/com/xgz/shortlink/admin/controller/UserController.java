@@ -72,6 +72,8 @@ public class UserController {
 
     /**
      * 用户登录
+     * 使用redis存储登录token
+     * 为了解决用户重复登录的情况,使用hash结构
      */
     @PostMapping("/login")
     public Result<UserLoginRespDTO> login(@RequestBody UserLoginReqDTO requestParam) {
@@ -87,6 +89,10 @@ public class UserController {
         return Results.success(userService.checkLogin(token));
     }
 
+    /**
+     * 判断用户是否登录v2.0
+     *
+     */
     @GetMapping("/check-login2")
     public Result<Boolean> checkLogin2(@RequestParam("username") String username,@RequestParam("token") String token) {
         return Results.success(userService.checkLogin2(username,token));
