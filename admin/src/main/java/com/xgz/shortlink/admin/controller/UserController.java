@@ -93,9 +93,21 @@ public class UserController {
      * 判断用户是否登录v2.0
      *
      */
+    // TODO: 2024/4/11 代码逻辑有问题
     @GetMapping("/check-login2")
     public Result<Boolean> checkLogin2(@RequestParam("username") String username,@RequestParam("token") String token) {
+        Boolean aBoolean = userService.checkLogin2(username, token);
+        System.out.println("aBoolean = " + aBoolean);
         return Results.success(userService.checkLogin2(username,token));
+    }
+
+    /**
+     * 用户退出
+     */
+    @DeleteMapping("/logout")
+    public Result<Void>  logout(@RequestParam("username") String username,@RequestParam("token") String token){
+        userService.logout(username,token);
+        return Results.success();
     }
 
 }
