@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import static com.xgz.shortlink.admin.common.constant.RedisCacheConstant.USER_LOGIN_USERNAME_KEY;
 
@@ -31,20 +32,20 @@ public class UserTransFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String username = httpServletRequest.getHeader("username");
-        String token = httpServletRequest.getHeader("token");
         String requestURI = httpServletRequest.getRequestURI();
 
-        Object jsonResult = stringRedisTemplate.opsForHash().get(USER_LOGIN_USERNAME_KEY + username, token);
-        if (jsonResult != null) {
-            UserInfoDTO userInfoDTO = JSON.parseObject(jsonResult.toString(), UserInfoDTO.class);
-            UserContext.setUser(userInfoDTO);
-        }
-        try {
-            if (requestURI == "/api/short-link/v1/group") {
-                filterChain.doFilter(servletRequest, servletResponse);
-                return;
+        // TODO: 2024/4/15 存在bug  用户如果未登录 就存在问题 需要在网关层面去操作
+        if (!Objects.equals(requestURI,"/api/short-link/v1/user/login")){
+            String username = httpServletRequest.getHeader("username");
+            String token = httpServletRequest.getHeader("token");
+            Object jsonResult = stringRedisTemplate.opsForHash().get(USER_LOGIN_USERNAME_KEY + username, token);
+            if (jsonResult != null) {
+                UserInfoDTO userInfoDTO = JSON.parseObject(jsonResult.toString(), UserInfoDTO.class);
+                UserContext.setUser(userInfoDTO);
             }
+        }
+
+        try {
             filterChain.doFilter(servletRequest, servletResponse);
         } finally {
             UserContext.removeUser();
