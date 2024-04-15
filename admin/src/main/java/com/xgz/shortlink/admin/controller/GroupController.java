@@ -4,6 +4,7 @@ import com.xgz.shortlink.admin.common.convention.result.Result;
 import com.xgz.shortlink.admin.common.convention.result.Results;
 
 import com.xgz.shortlink.admin.dto.req.GroupSaveReqDTO;
+import com.xgz.shortlink.admin.dto.req.GroupUpdateReqDTO;
 import com.xgz.shortlink.admin.dto.resp.GroupRespDTO;
 import com.xgz.shortlink.admin.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,16 @@ public class GroupController {
         List<GroupRespDTO> result=groupService.listGroup();
         return Results.success(result);
     }
+
+
+    /**
+     * 修改短链接分组
+     */
+    @PutMapping
+    public Result<Void> updateGroup(@RequestBody GroupUpdateReqDTO requestParam){
+        groupService.updateGroup(requestParam);
+        return Results.success();
+    }
+
 
 }
