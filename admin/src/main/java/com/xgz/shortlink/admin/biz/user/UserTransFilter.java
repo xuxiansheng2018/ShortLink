@@ -35,7 +35,7 @@ public class UserTransFilter implements Filter {
         String requestURI = httpServletRequest.getRequestURI();
 
         // TODO: 2024/4/15 存在bug  用户如果未登录 就存在问题 需要在网关层面去操作
-        if (!Objects.equals(requestURI, "/api/short-link/v1/user/login")) {
+        if (!Objects.equals(requestURI, "/api/short-link/admin/v1/user/login")) {
             String username = httpServletRequest.getHeader("username");
             String token = httpServletRequest.getHeader("token");
             Object jsonResult = stringRedisTemplate.opsForHash().get(USER_LOGIN_USERNAME_KEY + username, token);

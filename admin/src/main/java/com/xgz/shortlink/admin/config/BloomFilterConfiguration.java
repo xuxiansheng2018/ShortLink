@@ -1,5 +1,6 @@
 package com.xgz.shortlink.admin.config;
 
+import cn.hutool.core.util.StrUtil;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,10 @@ import org.springframework.context.annotation.Configuration;
  * Level:
  * Description:
  */
+
+/**
+ * 布隆过滤器
+ */
 @Configuration
 public class BloomFilterConfiguration {
     @Bean
@@ -19,5 +24,6 @@ public class BloomFilterConfiguration {
         //1亿个元素  0.001%的误判率
         cachePenetrationBloomFilter.tryInit(100000000, 0.001);
         return cachePenetrationBloomFilter;
+
     }
 }

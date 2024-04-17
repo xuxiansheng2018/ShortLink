@@ -1,2 +1,22 @@
 server:
   port: 8001
+
+spring:
+  datasource:
+      type: com.zaxxer.hikari.HikariDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      password: root
+      username: root
+      url: jdbc:mysql://192.168.153.110:3306/shortlink?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+      hikari:
+        connection-test-query: select 1
+        connection-timeout: 20000
+        idle-timeout: 300000
+        maximum-pool-size: 5
+      minimum-idle: 5
+
+  data:
+    redis:
+      password: root
+      port: 6379
+      host: 192.168.153.110
